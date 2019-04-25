@@ -97,10 +97,7 @@
                         console.log(response)
                         if(response.data.code == 200){
                             if(response.data.message == "登录成功"){
-                                Notify({
-                                    message:response.data.message,
-                                    background:"green"
-                                });
+                                this.$router.push({name:"Home"})
                             }else{
                                 Notify({
                                     message:response.data.message,
@@ -133,16 +130,19 @@
                             user_weixin:this.user_weixin
                         }
                     }).then(response=>{
-                        console.log(response)
-                        Notify({
-                            message:"接口接通",
-                            background:"green"
-                        });
+                        if(response.data.message == "用户已存在"){
+                          Notify({
+                            message:response.data.message,
+                            background:"red"
+                          });
+                        }else{
+                          this.$router.push({path:"/home"})
+                        }
                     }).catch(error=>{
                         Notify({
-                            message:"注册",
+                            message:"注册失败",
                             background:"red"
-                        });
+                        })
                     })
                 }
             },
