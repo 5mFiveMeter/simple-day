@@ -1,6 +1,10 @@
 <template>
     <div>
-        <my-head></my-head>
+      <van-notice-bar
+        text="WillMe version 1.0.0 终于完成了"
+        left-icon="volume-o"
+        :scrollable="false"
+      />
         <div class="login-container">
             <van-tabs v-model="active_login" @change="clearErrorMessage">
                 <van-tab title="登录">
@@ -63,12 +67,9 @@
 </template>
 
 <script>
-    import myHead from "@/components/head"
-    import URL from "@/serviceAPI.config.js"
-    import axios from "axios"
+    import URL from "@/utils/url.js"
     import {Notify} from "vant"
     export default {
-        components:{myHead},
         data(){
             return {
                 active_login:0,
@@ -86,7 +87,7 @@
                 var nameCan = this.checkUserName()
                 var passwordCan = this.checkUserPassword()
                 if(nameCan && passwordCan){
-                    axios({
+                    this.axios({
                         url:URL.login,
                         method:"post",
                         data:{
@@ -94,10 +95,12 @@
                             password:this.password
                         }
                     }).then(response=>{
-                        console.log(response)
                         if(response.data.code == 200){
                             if(response.data.message == "登录成功"){
-                                this.$router.push({name:"Home"})
+                              localStorage.setItem("WillMe_token","1124092331")
+                              this.$router.push({name:"Home"})
+                              this.$store.commit("CHANGE_USER_NAME",this.user_name)
+
                             }else{
                                 Notify({
                                     message:response.data.message,
@@ -120,7 +123,7 @@
                 var passwordCan = this.checkUserPassword()
                 //检查是否填写正确
                 if(nameCan && passwordCan){
-                    axios({
+                    this.axios({
                         url:URL.register,
                         method:"post",
                         data:{
@@ -137,6 +140,7 @@
                           });
                         }else{
                           this.$router.push({path:"/home"})
+                          this.$store.commit("CHANGE_USER_NAME",this.user_name)
                         }
                     }).catch(error=>{
                         Notify({
@@ -172,11 +176,13 @@
 
 <style lang="less" scoped>
     .login-container{
-        margin: 8rem auto 0;
-        width: 25rem;
-        // height: 30rem;
-        box-shadow: 0 0 6px 0 hsla(0,0%,64%,.5);
-        background-color: #f8f8f8;
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 25rem;
+      box-shadow: 0 0 6px 0 hsla(0,0%,64%,.5);
+      background-color: #f8f8f8;
     }
     .van-button--large{
         margin: 0.5rem 0;

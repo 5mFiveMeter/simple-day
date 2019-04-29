@@ -3,9 +3,17 @@ import Vuex from "vuex"
 
 Vue.use(Vuex)
 
-const state = {}
+const state = {
+  user_name:""
+}
 const actions = {}
-const mutations = {}
+
+const mutations = {
+  CHANGE_USER_NAME (state,name) {
+    state.user_name = name
+  }
+}
+
 
 const store = new Vuex.Store({
     state,

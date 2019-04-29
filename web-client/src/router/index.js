@@ -14,16 +14,26 @@ const router =  new Router({
       path:"/home",
       name:"Home",
       component:resolve=>require(["@/views/home/home"],resolve)
+    },
+    {
+      path:"/nonsense",
+      name:"nonsense",
+      component:resolve=>require(["@/views/nonsense/nonsense"],resolve)
+    },
+    {
+      path:"/person",
+      name:"person",
+      component:resolve=>require(["@/views/person/person"],resolve)
     }
   ]
 })
 
 router.beforeEach((to,from,next)=>{
-  if(to.path === "/"){
+  if(from.path === "/"){
     next()
   }else{
-    let token = localStorage.getItem("Token")
-    if(token === "null" || token === ""){
+    let token = localStorage.getItem("WillMe_token")
+    if(token === null || token === ""){
       next("/")
     }else{
       next()
