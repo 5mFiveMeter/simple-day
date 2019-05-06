@@ -1,7 +1,7 @@
 <template>
     <div>
       <van-notice-bar
-        text="WillMe version 1.0.0 终于完成了"
+        text="SimpleDay version 1.0.0 终于完成了"
         left-icon="volume-o"
         :scrollable="false"
       />

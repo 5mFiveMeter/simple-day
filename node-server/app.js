@@ -11,10 +11,12 @@ app.use(bodyParser())
 app.use(cors())
 
 let user = require("./appAPI/user.js")
+let selfMessage = require("./appAPI/self-message.js")
 
 //------------路由
 let router = new Router()
 router.use("/user",user.routes())
+router.use("/self-message",selfMessage.routes())
 app.use(router.routes())
 app.use(router.allowedMethods())
 
