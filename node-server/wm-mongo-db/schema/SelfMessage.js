@@ -5,7 +5,7 @@ let SelfMessage = new Schema({
     user_name:{type:String},
     create_time:{type:Number,default:0},
     message_type:{type:String},
-    message_content:{type:Array,default:[]}
+    message_content:{type:String,default:""}
 },{collection:"SelfMessage"})
 
 mongoose.model("SelfMessage",SelfMessage)

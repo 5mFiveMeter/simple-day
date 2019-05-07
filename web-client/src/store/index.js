@@ -3,7 +3,7 @@ import Vuex from "vuex"
 
 Vue.use(Vuex)
 
-const state = {
+const state = sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')) : {
   user_name:""
 }
 const actions = {}

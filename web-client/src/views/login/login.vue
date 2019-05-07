@@ -68,7 +68,7 @@
 
 <script>
     import URL from "@/utils/url.js"
-    import {Notify} from "vant"
+    Notify
     export default {
         data(){
             return {
@@ -98,9 +98,8 @@
                         if(response.data.code == 200){
                             if(response.data.message == "登录成功"){
                               localStorage.setItem("WillMe_token","1124092331")
-                              this.$router.push({name:"Home"})
                               this.$store.commit("CHANGE_USER_NAME",this.user_name)
-
+                              this.$router.push({name:"Home"})
                             }else{
                                 Notify({
                                     message:response.data.message,
