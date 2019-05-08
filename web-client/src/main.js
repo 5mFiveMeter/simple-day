@@ -10,8 +10,9 @@ import "./public/reset.css"
 //引入rem
 import "./public/rem.js"
 //vant
-import {Row,Tab,Tabs,Field,Button,Cell,CellGroup,Tabbar,TabbarItem,NoticeBar,Dialog,List } from "vant"
-Vue.use(Row).use(Tab).use(Tabs).use(Field).use(Button).use(Cell).use(CellGroup).use(Tabbar).use(TabbarItem).use(NoticeBar).use(Dialog).use(List)
+import Vant from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Vant)
 //axios
 import "./utils/axios.js"
 

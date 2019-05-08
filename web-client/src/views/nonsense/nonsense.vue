@@ -30,6 +30,7 @@
         title="添加留言"
         cancel-button-text="取消添加"
         confirm-button-text="添加留言"
+        @confirm="addSelfMessage"
         show-cancel-button
       >
         <van-field
@@ -72,7 +73,19 @@
           }
           this.axios.post(URL.add_self_message_content,add_data)
             .then(response =>{
-            console.log(response)
+              if(response.data.code == 200){
+                this.getSelfMessage()
+                this.edit_message = ""
+                Notify({
+                  message:"留言成功",
+                  background:"green"
+                })
+              }else{
+                Notify({
+                  message:"留言失败",
+                  background:"red"
+                })
+              }
           })
         },
         //查询个人留言
@@ -85,14 +98,13 @@
             }
           }).then(response =>{
             if(response.data.code === 200){
-              this.oneself_message_group = response.data.data
+              this.oneself_message_group = response.data.data.reverse()
             }else{
               Notify({
                 message:"留言获取失败",
-                background:"green"
+                background:"red"
               })
             }
-            // console.log(response.data)
           })
         }
       },

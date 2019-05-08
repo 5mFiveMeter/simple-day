@@ -68,7 +68,6 @@
 
 <script>
     import URL from "@/utils/url.js"
-    Notify
     export default {
         data(){
             return {
