@@ -2,16 +2,26 @@
     <div class="self-message-group">
       <van-list>
         <template v-for="(value,index) in oneself_message_group">
-          <van-row>
-            <van-col :span="24">{{value.message_content}}</van-col>
-            <van-col :span="7" :offset="17">{{value.create_time | msFormatTime}}</van-col>
-          </van-row>
+          <van-cell :key="value.create_time">
+            <van-row style="padding: 8px">
+              <van-col :span="24" style="word-wrap: break-word">{{value.message_content}}</van-col>
+              <van-col :span="10" :offset="14">{{value.create_time | msFormatTime}}</van-col>
+            </van-row>
+            <span class="sd-close-icon" style="position: absolute;right: 5px;top: 0;line-height: 1.15" @click="deteleTheMessage(value.create_time)">x</span>
+          </van-cell>
         </template>
       </van-list>
+      <van-row v-if="oneself_message_group.length == 0">
+        <van-col :span="24" style="text-align: center">..........................</van-col>
+        <van-col :span="24" style="text-align: center">你的孤独谁能懂</van-col>
+      </van-row>
     </div>
 </template>
 
 <script>
+  import URL from '@/utils/url.js'
+  import {Notify} from "vant"
+  import {Dialog} from "vant"
     export default {
       name: "message-group",
       data(){
@@ -37,10 +47,38 @@
       },
       props:["oneself_message_group"],
       methods:{
-
+        //删除留言
+        deteleTheMessage(createTime){
+          Dialog.confirm({
+            title: '提示',
+            message: '确认删除?'
+          }).then(() => {
+            this.axios.post(URL.detele_self_message_content,{
+              user_name:this.$store.state.user_name,
+              create_time:createTime
+            }).then(response => {
+              if(response.data.code == 200){
+                this.$emit('update_list')
+                Notify({
+                  message:"删除成功",
+                  background:"green"
+                })
+              }else{
+                Notify({
+                  message:"删除失败",
+                  background:"red"
+                })
+              }
+            })
+          }).catch(err =>{
+            new Error(err)
+          });
+        }
       },
-      mounted(){
+      watch:{
+        oneself_message_group:()=>{
 
+        }
       }
     }
 </script>
@@ -48,17 +86,10 @@
 <style lang="less">
 .self-message-group{
   overflow-y: auto;
-  height: 485px;
+  height: calc(100vh - 139px);
   background-color: #fff;
-  .van-list{
-    .van-row{
-      padding: 10px;
-      border-bottom: 1px solid #f6f7f8;
-      .van-col{
-        word-wrap: break-word;
-        padding: 5px 0;
-      }
-    }
+  .van-cell{
+    padding: 0;
   }
 }
 </style>

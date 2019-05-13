@@ -9,7 +9,7 @@
             is-link
             @click="showAddDialog"
           ></van-cell>
-          <self-message-group :oneself_message_group="oneself_message_group"></self-message-group>
+          <self-message-group  @update_list="getSelfMessage" :oneself_message_group="oneself_message_group"></self-message-group>
         </van-tab>
 
         <van-tab title="Others">

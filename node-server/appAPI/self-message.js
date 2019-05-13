@@ -9,7 +9,7 @@ router.get("/",async (ctx)=>{
         message:"个人留言接通"
     }
 })
-
+// 查询留言
 router.get("/get_self_message_content",async (ctx)=>{
     let user_name = ctx.query.user_name
     let SelfModel = mongoose.model("SelfMessage")
@@ -21,10 +21,8 @@ router.get("/get_self_message_content",async (ctx)=>{
         }
     })
 })
-
+//添加留言
 router.post("/add_self_message_content",async (ctx)=>{
-    // console.log(ctx.request)
-    // console.log(ctx.request.body)
     var postObj = ctx.request.body
     var tempObj = {
         user_name:postObj.user_name,
@@ -43,6 +41,24 @@ router.post("/add_self_message_content",async (ctx)=>{
         new Error(err)
     })
 })
-
-
+//删除留言
+router.post('/detele_self_message_content',async (ctx) => {
+    let SelfMessageModel = mongoose.model("SelfMessage")
+    await SelfMessageModel.deleteOne({user_name:ctx.request.body.user_name,create_time:ctx.request.body.create_time })
+        .then(res => {
+            if( res.ok == 1 && res.deletedCount>0 ){
+                ctx.body = {
+                    code:200,
+                    message:"留言删除成功"
+                }
+            }else {
+                ctx.body = {
+                    code:200,
+                    message:"留言删除失败"
+                }
+            }
+        }).catch(err=>{
+            new Error(err)
+    })
+})
 module.exports = router

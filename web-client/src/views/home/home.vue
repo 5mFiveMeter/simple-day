@@ -1,5 +1,7 @@
 <template>
     <div>
+      <van-col :span="24" style="text-align: center">..........................</van-col>
+      <van-col :span="24" style="text-align: center">人的孤独谁能懂</van-col>
       <my-bar :active="0"></my-bar>
     </div>
 </template>

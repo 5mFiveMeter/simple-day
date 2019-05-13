@@ -22,7 +22,7 @@ app.use(router.allowedMethods())
 
 
 app.use(async ctx=>{
-    ctx.body = "hellow"
+    ctx.body = "未知错误"
 })
 
 //----------mongodb
